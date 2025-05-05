@@ -18,8 +18,8 @@ var organizeCmd = &cobra.Command{
 	Use:   "organize",
 	Short: "Organize your downloads folder",
 	Run: func(cmd *cobra.Command, args []string) {
-		downloadsDir := "C:/Users/madhu/Downloads" // Source directory
-		destDir := "C:/Users/madhu/Documents"      // Destination directory where categorized folders exist
+		downloadsDir := "C:/Users/<username>/Downloads" // fill username (Source Directory)
+		destDir := "C:/Users/<username>/Documents"      // fill username (Destination Directory)
 
 		fmt.Println("Organizing files...")
 		err := organizeFiles(downloadsDir, destDir)
@@ -179,7 +179,7 @@ func userChooseTopic(folders []string, fileName string) string {
 
 		// If user chooses to quit, exit the program
 		if input == "Q" {
-			fmt.Println("🛑 Organizing process stopped by user.")
+			fmt.Println("Organizing process stopped by user.")
 			os.Exit(0)
 		}
 
@@ -189,6 +189,6 @@ func userChooseTopic(folders []string, fileName string) string {
 			return folders[index-1]
 		}
 
-		fmt.Println("❌ Invalid choice. Please enter a valid number, 'S' to skip, or 'Q' to quit.")
+		fmt.Println("Invalid choice. Please enter a valid number, 'S' to skip, or 'Q' to quit.")
 	}
 }
