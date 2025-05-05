@@ -15,7 +15,7 @@ var moveCmd = &cobra.Command{
 	Long: `Move a file from one location to another.
 
 Usage Example:
-  CliProj move C:\Users\madhu\Downloads\file.txt C:\Users\madhu\Documents
+  CliProj move C:\Users\<username>\Downloads\file.txt C:\Users\<username>\Documents
 
 If the destination is a folder, the file will be placed inside it.`,
 	Args: cobra.ExactArgs(2),
@@ -33,37 +33,31 @@ If the destination is a folder, the file will be placed inside it.`,
 }
 
 func moveFile(src, dest string) error {
-	// Check if source file exists
 	sourceFile, err := os.Open(src)
 	if err != nil {
 		return fmt.Errorf("unable to open source file: %v", err)
 	}
 	defer sourceFile.Close()
 
-	// If `dest` is a directory, append the filename
 	destInfo, err := os.Stat(dest)
 	if err == nil && destInfo.IsDir() {
 		dest = filepath.Join(dest, filepath.Base(src))
 	}
 
-	// Create the destination file
 	destFile, err := os.Create(dest)
 	if err != nil {
 		return fmt.Errorf("unable to create destination file: %v", err)
 	}
 	defer destFile.Close()
 
-	// Copy the file contents
 	_, err = io.Copy(destFile, sourceFile)
 	if err != nil {
 		return fmt.Errorf("unable to copy file: %v", err)
 	}
 
-	// Close both files before attempting deletion
 	sourceFile.Close()
 	destFile.Close()
 
-	// Remove the source file
 	err = os.Remove(src)
 	if err != nil {
 		fmt.Println("Warning: unable to remove source file:", err)
