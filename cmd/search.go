@@ -25,7 +25,7 @@ var searchCmd = &cobra.Command{
 }
 
 func searchFiles(term string) error {
-	dir := "C:/Users/madhu/Documents"
+	dir := "C:/Users/<username>/Documents"  // <username> fill username with your system name
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Println("Skipping:", path, "Error:", err)
